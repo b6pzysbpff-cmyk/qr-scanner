@@ -1,17 +1,19 @@
-QR-Scanner – iPhone und Samsung (Version 2)
+MEIN CODE-SCANNER – VERSION 3 (QR + EAN / BARCODES)
 
-Diese Version behebt die Meldung „Der Browser unterstützt die QR-Erkennung nicht“ auf iPhones.
+Unterstützt QR-Code, EAN-13, EAN-8, UPC-A, UPC-E, Code 128, Code 39 und ITF.
+Bibliothek: ZXing (MIT-Lizenz), geladen via jsDelivr; beim ersten Aufruf wird Internetzugang benötigt.
+Scans und Kamerabilder werden nicht an einen Server versendet.
 
-UPDATE DER BEREITS VERÖFFENTLICHTEN APP:
-1. ZIP-Datei entpacken.
-2. GitHub-Repository qr-scanner öffnen.
-3. Unter Add file > Upload files den INHALT des entpackten Ordners hochladen.
-4. Die bestehenden Dateien index.html, sw.js und manifest.webmanifest überschreiben (Commit changes).
-5. Auf iPhone Safari öffnen, die bisherige GitHub-Pages-Adresse aufrufen und neu laden.
-6. Falls die alte Version erscheint: Home-Bildschirm-App entfernen, Safari-Websitedaten der Seite löschen bzw. erneut öffnen und wieder zum Home-Bildschirm hinzufügen.
-7. Auf „Kamera starten“ tippen, Kamera erlauben und QR-Code scannen.
+UPDATE AUF DEM BESTEHENDEN GITHUB-REPOSITORY
+1. Auf github.com anmelden.
+2. Repository qr-scanner öffnen.
+3. Add file > Upload files.
+4. Die Dateien index.html, manifest.webmanifest, sw.js und ANLEITUNG.txt aus diesem entpackten Ordner wählen und hochladen.
+   Der vorhandene Ordner icons/ kann unverändert bleiben.
+5. Commit changes bestätigen.
+6. GitHub Actions / Pages prüfen, ob der neue Stand veröffentlicht wurde.
+7. Auf iPhone in Safari und auf Samsung in Chrome die bestehende Webseite neu laden.
+   Bei alten PWA-Versionen gegebenenfalls die installierte App entfernen und neu hinzufügen.
 
-TECHNIK:
-Verwendet native BarcodeDetector-Unterstützung, falls verfügbar, ansonsten jsQR 1.4.0 über jsDelivr.
-Für die Ersatz-Erkennung muss die jsQR-Bibliothek aus dem Internet geladen werden. Kamerabilder werden lokal verarbeitet.
-Der Scan von Bildern ist ebenfalls möglich.
+Hinweis: Manche sehr kleinen oder beschädigten Barcodes lassen sich mit der Smartphone-Kamera nur schwer lesen.
+Barcode-Nummern identifizieren nicht automatisch Produktnamen; dafür wäre eine externe Produktdatenbank nötig.
