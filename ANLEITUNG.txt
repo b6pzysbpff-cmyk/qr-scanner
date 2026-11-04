@@ -1,0 +1,25 @@
+MEIN QR-SCANNER – SAMSUNG GALAXY A17
+
+Diese App ist eine installierbare Web-App (PWA), keine APK-Datei.
+Der QR-Code wird direkt auf dem Handy erkannt; keine Datenübertragung der Kamerabilder.
+
+EINRICHTUNG MIT GITHUB PAGES:
+1. Am Computer github.com öffnen und anmelden.
+2. Neues öffentliches Repository "qr-scanner" anlegen.
+3. Den INHALT dieses Ordners hochladen (index.html, manifest.webmanifest, sw.js und icons/).
+4. Im Repository Settings > Pages > Build and deployment: "Deploy from a branch" auswählen.
+5. Branch "main", Ordner "/ (root)" wählen, Save.
+6. Wenn GitHub Pages bereit ist, lautet der Link normalerweise:
+   https://DEIN-GITHUB-NAME.github.io/qr-scanner/
+7. Diesen Link im Chrome-Browser auf dem Samsung Galaxy A17 öffnen.
+8. Browser-Menü (drei Punkte) > "Zum Startbildschirm hinzufügen" > "Installieren".
+9. Die App vom Startbildschirm öffnen und "Kamera starten" drücken.
+
+WICHTIG:
+- Die Kamera benötigt eine HTTPS-Adresse. Eine heruntergeladene index.html allein
+  funktioniert dafür nicht zuverlässig.
+- Beim ersten Start Kamerazugriff erlauben.
+- Chrome oder Samsung Internet verwenden; Firefox Android unterstützt die
+  benötigte Erkennung ggf. nicht.
+- Links werden niemals automatisch geöffnet.
+- QR-Codes werden nicht dauerhaft gespeichert.
