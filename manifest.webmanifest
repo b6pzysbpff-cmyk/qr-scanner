@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Mein QR- und Barcode-Scanner",
   "short_name": "Code-Scanner",
-  "description": "QR-, EAN- und andere Strichcodes mit iPhone oder Android scannen",
+  "description": "QR- und Barcodes scannen und Lebensmittel automatisch bei Open Food Facts nachschlagen",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
