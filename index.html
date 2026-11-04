@@ -1,16 +1,28 @@
 <!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#12243c"><meta name="description" content="QR- und Barcode-Scanner für iPhone und Android"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon-192.png"><title>Mein Code-Scanner V6</title>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#12243c"><meta name="description" content="QR- und Barcode-Scanner mit Produkterkennung für iPhone und Android"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon-192.png"><title>Mein Code-Scanner V7</title>
 <style>
-:root{color-scheme:dark;font-family:system-ui,-apple-system,Roboto,sans-serif;background:#091525;color:#f4f7fd}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(155deg,#122941,#091525 60%);padding:env(safe-area-inset-top) 16px env(safe-area-inset-bottom)}main{max-width:580px;margin:auto;padding:25px 0 35px}header{display:flex;align-items:center;gap:13px;margin-bottom:24px}.logo{width:48px;height:48px;background:#28d1ae;border-radius:15px;display:grid;place-items:center;color:#092338;font-size:27px;font-weight:800}h1{font-size:1.7rem;margin:0}p{line-height:1.5}.muted{color:#b1c2d5}h2{font-size:1.2rem;margin:0 0 12px}.panel{background:#172b43;border:1px solid #35516c;border-radius:20px;padding:18px;margin:18px 0}.camera{width:100%;aspect-ratio:4/5;max-height:460px;background:#050b12;border-radius:15px;overflow:hidden;position:relative;display:grid;place-items:center}#reader{width:100%;height:100%;display:none;overflow:hidden}#reader video{width:100%!important;height:100%!important;object-fit:contain!important}#reader canvas{max-width:100%}.camera.active #reader{display:block}.camera.active:after{content:'';pointer-events:none;position:absolute;inset:22% 13%;border:3px solid #2ce5bb;border-radius:22px;box-shadow:0 0 0 100vmax #0002}.placeholder{text-align:center;color:#bed2e1;padding:20px}.placeholder strong{display:block;font-size:2.6rem;margin-bottom:12px}button,.filebutton,a.action{appearance:none;border:0;border-radius:13px;padding:15px 19px;background:#2ce5bb;color:#082237;font-size:1rem;font-weight:750;cursor:pointer;text-align:center;display:inline-flex;justify-content:center;align-items:center;gap:7px;text-decoration:none;min-height:50px}button.secondary,.filebutton{background:#29425d;color:#f6f9ff}button:disabled{opacity:.5;cursor:default}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.actions .wide{grid-column:span 2}.status{min-height:1.5em;font-size:.94rem;color:#b9cee1;margin:13px 0 2px}#result{word-break:break-word;white-space:pre-wrap;background:#091b2d;border:1px solid #36526e;padding:14px;border-radius:12px;line-height:1.5;max-height:220px;overflow:auto}#result:empty:before{content:'Noch kein Code eingelesen.';color:#aabed0}#open{display:none}#open.visible{display:inline-flex}input[type=file]{display:none}.note{font-size:.9rem;color:#b6c6d7}footer{font-size:.83rem;color:#90abc0;margin-top:26px}button:focus-visible,.filebutton:focus-visible,a:focus-visible{outline:3px solid white;outline-offset:3px}
-</style></head><body><main><header><div class="logo" aria-hidden="true">▦</div><div><h1>Mein Code-Scanner</h1><div class="muted">Einfach · Privat · Ohne Werbung · Version 6</div></div></header>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,Roboto,sans-serif;background:#091525;color:#f4f7fd}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(155deg,#122941,#091525 60%);padding:env(safe-area-inset-top) 16px env(safe-area-inset-bottom)}main{max-width:580px;margin:auto;padding:25px 0 35px}header{display:flex;align-items:center;gap:13px;margin-bottom:24px}.logo{width:48px;height:48px;background:#28d1ae;border-radius:15px;display:grid;place-items:center;color:#092338;font-size:27px;font-weight:800}h1{font-size:1.7rem;margin:0}p{line-height:1.5}.muted{color:#b1c2d5}h2{font-size:1.2rem;margin:0 0 12px}.panel{background:#172b43;border:1px solid #35516c;border-radius:20px;padding:18px;margin:18px 0}.camera{width:100%;aspect-ratio:4/5;max-height:460px;background:#050b12;border-radius:15px;overflow:hidden;position:relative;display:grid;place-items:center}#reader{width:100%;height:100%;display:none;overflow:hidden}#reader video{width:100%!important;height:100%!important;object-fit:contain!important}#reader canvas{max-width:100%}.camera.active #reader{display:block}.camera.active:after{content:'';pointer-events:none;position:absolute;inset:22% 13%;border:3px solid #2ce5bb;border-radius:22px;box-shadow:0 0 0 100vmax #0002}.placeholder{text-align:center;color:#bed2e1;padding:20px}.placeholder strong{display:block;font-size:2.6rem;margin-bottom:12px}button,.filebutton,a.action{appearance:none;border:0;border-radius:13px;padding:15px 19px;background:#2ce5bb;color:#082237;font-size:1rem;font-weight:750;cursor:pointer;text-align:center;display:inline-flex;justify-content:center;align-items:center;gap:7px;text-decoration:none;min-height:50px}button.secondary,.filebutton{background:#29425d;color:#f6f9ff}button:disabled{opacity:.5;cursor:default}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.actions .wide{grid-column:span 2}.status{min-height:1.5em;font-size:.94rem;color:#b9cee1;margin:13px 0 2px}#result{word-break:break-word;white-space:pre-wrap;background:#091b2d;border:1px solid #36526e;padding:14px;border-radius:12px;line-height:1.5;max-height:220px;overflow:auto}#result:empty:before{content:'Noch kein Code eingelesen.';color:#aabed0}#open{display:none}#open.visible{display:inline-flex}input[type=file]{display:none}.note{font-size:.9rem;color:#b6c6d7}.product-head{display:flex;align-items:center;gap:14px;margin:8px 0 14px}.product-head img{width:100px;height:110px;object-fit:contain;background:#fff;border-radius:12px;padding:5px}.product-head h3{font-size:1.2rem;margin:0 0 7px;line-height:1.3}.product-head p{margin:0}.detail{display:flex;justify-content:space-between;gap:14px;border-top:1px solid #34506b;padding:9px 0;font-size:.94rem}.detail span:first-child{color:#b9cee1}.detail strong{text-align:right}.product-message{color:#d2e1f0;line-height:1.45}.offlink{color:#86ffe0;text-underline-offset:3px}.smallbutton{padding:10px 14px;min-height:40px;font-size:.9rem}.hidden{display:none!important}footer{font-size:.83rem;color:#90abc0;margin-top:26px}button:focus-visible,.filebutton:focus-visible,a:focus-visible{outline:3px solid white;outline-offset:3px}
+</style></head><body><main><header><div class="logo" aria-hidden="true">▦</div><div><h1>Mein Code-Scanner</h1><div class="muted">Einfach · Privat · Ohne Werbung · Version 7</div></div></header>
 <div class="panel"><h2>QR-Code oder Strichcode scannen</h2><div class="camera" id="camera"><div id="reader" aria-label="Kamerabild"></div><div class="placeholder" id="placeholder"><strong>▦</strong>Zum Scannen die Kamera einschalten.</div></div><div class="actions"><button id="start">Kamera starten</button><button id="stop" class="secondary" disabled>Kamera stoppen</button><label for="file" class="filebutton wide">Code aus Bild auswählen</label><input type="file" id="file" accept="image/*"></div><div role="status" aria-live="polite" id="status" class="status">Bereit.</div></div>
-<div class="panel"><h2>Gelesener Inhalt</h2><p class="muted" id="codeType">QR-Code, EAN-13, EAN-8, UPC oder Code 128</p><div id="result" aria-live="polite"></div><div class="actions"><button id="copy" disabled>Text kopieren</button><button id="again" class="secondary">Erneut scannen</button><a id="open" class="action wide" target="_blank" rel="noopener noreferrer">Webseite öffnen</a></div><p class="note">Links werden nie automatisch geöffnet. Bei Produktcodes erscheint die Nummer; es erfolgt keine automatische Produktsuche.</p></div>
-<footer>Die Auswertung geschieht direkt auf diesem Gerät. Es werden keine Scans an einen Server gesendet.</footer></main>
+<div class="panel"><h2>Gelesener Inhalt</h2><p class="muted" id="codeType">QR-Code, EAN-13, EAN-8, UPC oder Code 128</p><div id="result" aria-live="polite"></div><div class="actions"><button id="copy" disabled>Text kopieren</button><button id="again" class="secondary">Erneut scannen</button><a id="open" class="action wide" target="_blank" rel="noopener noreferrer">Webseite öffnen</a></div><p class="note">Links werden nie automatisch geöffnet. Bei EAN- und UPC-Codes werden Produktinformationen automatisch bei Open Food Facts abgefragt. QR-Code-Texte bleiben lokal.</p></div>
+<section class="panel" id="productPanel" hidden aria-live="polite">
+<h2>Produktinformationen</h2>
+<div id="productMessage" class="product-message" role="status"></div>
+<div id="productDetails" hidden>
+ <div class="product-head"><img id="productImage" alt="Produktfoto" hidden><div><h3 id="productName"></h3><p id="productBrand" class="muted"></p></div></div>
+ <div id="productRows"></div>
+ <p><a id="offlink" class="offlink" target="_blank" rel="noopener noreferrer">Eintrag bei Open Food Facts ansehen</a></p>
+</div>
+<button id="retryProduct" class="secondary smallbutton hidden" type="button">Produktsuche erneut versuchen</button>
+<p class="note">Angaben stammen von Open Food Facts und können unvollständig oder fehlerhaft sein. Nährwerte, sofern vorhanden, beziehen sich auf 100 g bzw. 100 ml.</p>
+</section>
+<footer>Die Scan-Erkennung erfolgt auf deinem Gerät. Nur bei EAN- oder UPC-Produktcodes wird die erkannte Nummer zur Produktsuche an <a class="offlink" href="https://world.openfoodfacts.org/" target="_blank" rel="noopener noreferrer">Open Food Facts</a> übertragen. Dafür ist eine Internetverbindung nötig.</footer></main>
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script defer>
 'use strict';
 const $ = id => document.getElementById(id);
 let scanner=null, running=false, transitioning=false, found='';
+let productRequest=null, productQueryId=0, lastProductCode='';
 const status=t=>{$('status').textContent=t};
 const formats={QR_CODE:'QR-Code',EAN_13:'EAN-13',EAN_8:'EAN-8',UPC_A:'UPC-A',UPC_E:'UPC-E',CODE_128:'Code 128',CODE_39:'Code 39',ITF:'ITF'};
 function setup(){
@@ -33,8 +45,98 @@ async function stop(){
  catch(e){console.warn('Kamera stoppen:',e)}
  finally{running=false;transitioning=false;$('camera').classList.remove('active');$('placeholder').hidden=false;buttons();}
 }
+// Ausschließlich echte EAN-/UPC-Produktnummern werden nachgeschlagen.
+function isProductBarcode(raw,fmt){
+ const type=String(fmt||'').replace(/[^a-z0-9]/gi,'').toUpperCase();
+ return /^(EAN13|EAN8|UPCA|UPCE)$/.test(type) && /^\d{6,13}$/.test(raw.trim());
+}
+function resetProduct(){
+ productQueryId++;
+ if(productRequest){productRequest.abort();productRequest=null;}
+ lastProductCode='';
+ $('productPanel').hidden=true;
+ $('productMessage').textContent='';
+ $('productDetails').hidden=true;
+ $('productRows').replaceChildren();
+ $('productImage').hidden=true;
+ $('productImage').removeAttribute('src');
+ $('retryProduct').classList.add('hidden');
+}
+function productStatus(message, retry=false){
+ $('productMessage').textContent=message;
+ $('productDetails').hidden=true;
+ $('retryProduct').classList.toggle('hidden',!retry);
+}
+function appendDetail(label,value){
+ if(value===undefined||value===null||String(value).trim()==='')return;
+ const row=document.createElement('div');row.className='detail';
+ const left=document.createElement('span');left.textContent=label;
+ const right=document.createElement('strong');right.textContent=String(value);
+ row.append(left,right);$('productRows').append(row);
+}
+function nutrition(n,key,unit){
+ const v=n?.[key+'_100g'];
+ if(v===null||v===undefined||v==='')return null;
+ const num=Number(v);
+ if(!Number.isFinite(num))return null;
+ return new Intl.NumberFormat('de-DE',{maximumFractionDigits:1}).format(num)+' '+unit;
+}
+async function findProduct(code){
+ if(!/^\d{6,13}$/.test(code))return;
+ if(productRequest)productRequest.abort();
+ const queryId=++productQueryId;
+ const controller=new AbortController();productRequest=controller;
+ lastProductCode=code;
+ $('productPanel').hidden=false;
+ $('productDetails').hidden=true;
+ $('retryProduct').classList.add('hidden');
+ $('productMessage').textContent='Produkt wird bei Open Food Facts gesucht …';
+ // Bei einer reinen Browser-App kann der User-Agent nicht manuell gesetzt werden.
+ const fields='code,product_name,product_name_de,brands,quantity,image_front_url,image_url,nutrition_grades,nutriments,ingredients_text_de,ingredients_text';
+ const url='https://world.openfoodfacts.org/api/v2/product/'+encodeURIComponent(code)+'.json?fields='+encodeURIComponent(fields);
+ try{
+  const response=await fetch(url,{method:'GET',mode:'cors',signal:controller.signal,headers:{'Accept':'application/json'}});
+  if(queryId!==productQueryId)return;
+  if(response.status===429){productStatus('Zu viele Abfragen. Bitte später erneut versuchen.',true);return;}
+  if(!response.ok)throw new Error('HTTP '+response.status);
+  const data=await response.json();
+  if(queryId!==productQueryId)return;
+  if(data.status!==1||!data.product){productStatus('Zu dieser Nummer ist bei Open Food Facts kein Lebensmittel hinterlegt. Die Barcode-Nummer wurde trotzdem erfolgreich erkannt.');return;}
+  const product=data.product;
+  $('productName').textContent=product.product_name_de||product.product_name||'Produkt ohne hinterlegten Namen';
+  $('productBrand').textContent=product.brands||'Marke nicht angegeben';
+  $('productRows').replaceChildren();
+  appendDetail('Packungsgröße',product.quantity);
+  const grade=String(product.nutrition_grades||'').toUpperCase();
+  if(/^[A-E]$/.test(grade))appendDetail('Nutri-Score',grade);
+  const n=product.nutriments||{};
+  appendDetail('Energie',nutrition(n,'energy-kcal','kcal'));
+  appendDetail('Fett',nutrition(n,'fat','g'));
+  appendDetail('davon gesättigt',nutrition(n,'saturated-fat','g'));
+  appendDetail('Kohlenhydrate',nutrition(n,'carbohydrates','g'));
+  appendDetail('davon Zucker',nutrition(n,'sugars','g'));
+  appendDetail('Eiweiß',nutrition(n,'proteins','g'));
+  appendDetail('Salz',nutrition(n,'salt','g'));
+  const ingredients=product.ingredients_text_de||product.ingredients_text;
+  if(ingredients)appendDetail('Zutaten',ingredients);
+  const image=product.image_front_url||product.image_url;
+  const photo=$('productImage');photo.hidden=true;photo.removeAttribute('src');
+  if(typeof image==='string'){
+   try{const u=new URL(image);if(u.protocol==='https:' && (u.hostname==='images.openfoodfacts.org'||u.hostname.endsWith('.openfoodfacts.org'))){photo.src=u.href;photo.hidden=false;}}catch(e){}
+  }
+  $('offlink').href='https://world.openfoodfacts.org/product/'+encodeURIComponent(code);
+  $('productMessage').textContent='Produkt gefunden.';
+  $('productDetails').hidden=false;
+ }catch(err){
+  if(queryId!==productQueryId||err?.name==='AbortError')return;
+  productStatus('Produktabfrage nicht möglich. Bitte Internetverbindung prüfen und erneut versuchen.',true);
+ }finally{if(queryId===productQueryId)productRequest=null;}
+}
+$('retryProduct').addEventListener('click',()=>{if(lastProductCode)findProduct(lastProductCode)});
+
 function show(raw,fmt){
  if(!raw||found===raw)return;
+ resetProduct();
  found=raw;
  $('result').textContent=raw;
  $('copy').disabled=false;
@@ -42,6 +144,7 @@ function show(raw,fmt){
  const link=$('open');link.classList.remove('visible');link.removeAttribute('href');
  try{const u=new URL(raw.trim());if(['https:','http:'].includes(u.protocol)){link.href=u.href;link.classList.add('visible')}}catch(e){}
  status('Code erfolgreich gelesen.');
+ if(isProductBarcode(raw,fmt))findProduct(raw.trim());
  if(navigator.vibrate)navigator.vibrate(80);
  // Erst nach dem Decoder-Callback anhalten, damit dessen Kamera-Schleife ungestört beendet wird.
  setTimeout(()=>stop().catch(()=>{}),0);
@@ -51,6 +154,7 @@ function success(decodedText,decodedResult){
  const f=decodedResult?.result?.format;
  let format='Code';
  if(typeof f==='string')format=f;
+ else if(typeof f?.formatName==='string')format=f.formatName;
  else if(typeof decodedResult?.result?.formatName==='string')format=decodedResult.result.formatName;
  else if(typeof decodedResult?.result?.getBarcodeFormat==='function')format=String(decodedResult.result.getBarcodeFormat());
  show(decodedText,format);
@@ -74,7 +178,7 @@ async function start(){
 $('start').addEventListener('click',start);
 $('stop').addEventListener('click',async()=>{await stop();status('Kamera gestoppt.')});
 $('again').addEventListener('click',async()=>{
- found='';$('result').textContent='';$('copy').disabled=true;$('codeType').textContent='QR-Code, EAN-13, EAN-8, UPC oder Code 128';
+ resetProduct();found='';$('result').textContent='';$('copy').disabled=true;$('codeType').textContent='QR-Code, EAN-13, EAN-8, UPC oder Code 128';
  const a=$('open');a.classList.remove('visible');a.removeAttribute('href');
  await stop();await start();
 });
@@ -85,6 +189,7 @@ $('copy').addEventListener('click',async()=>{
 $('file').addEventListener('change',async e=>{
  const f=e.target.files?.[0];if(!f)return;
  await stop();
+ resetProduct();found='';
  if(!setup()){e.target.value='';return;}
  try{
   const r=await scanner.scanFileV2(f,false);
