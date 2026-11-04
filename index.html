@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#12243c"><meta name="description" content="QR- und Barcode-Scanner für iPhone und Android"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon-192.png"><title>Mein Code-Scanner V4</title>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#12243c"><meta name="description" content="QR- und Barcode-Scanner für iPhone und Android"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon-192.png"><title>Mein Code-Scanner V5</title>
 <style>
 :root{color-scheme:dark;font-family:system-ui,-apple-system,Roboto,sans-serif;background:#091525;color:#f4f7fd}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(155deg,#122941,#091525 60%);padding:env(safe-area-inset-top) 16px env(safe-area-inset-bottom)}main{max-width:580px;margin:auto;padding:25px 0 35px}header{display:flex;align-items:center;gap:13px;margin-bottom:24px}.logo{width:48px;height:48px;background:#28d1ae;border-radius:15px;display:grid;place-items:center;color:#092338;font-size:27px;font-weight:800}h1{font-size:1.7rem;margin:0}p{line-height:1.5}.muted{color:#b1c2d5}h2{font-size:1.2rem;margin:0 0 12px}.panel{background:#172b43;border:1px solid #35516c;border-radius:20px;padding:18px;margin:18px 0}.camera{width:100%;aspect-ratio:4/5;max-height:460px;background:#050b12;border-radius:15px;overflow:hidden;position:relative;display:grid;place-items:center}video{width:100%;height:100%;object-fit:cover;display:none}.camera.active video{display:block}.camera:after{content:'';pointer-events:none;position:absolute;inset:22% 13%;border:3px solid #2ce5bb;border-radius:22px;box-shadow:0 0 0 100vmax #0002}.placeholder{text-align:center;color:#bed2e1;padding:20px}.placeholder strong{display:block;font-size:2.6rem;margin-bottom:12px}button,.filebutton,a.action{appearance:none;border:0;border-radius:13px;padding:15px 19px;background:#2ce5bb;color:#082237;font-size:1rem;font-weight:750;cursor:pointer;text-align:center;display:inline-flex;justify-content:center;align-items:center;gap:7px;text-decoration:none;min-height:50px}button.secondary,.filebutton{background:#29425d;color:#f6f9ff}button:disabled{opacity:.5;cursor:default}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.actions .wide{grid-column:span 2}.status{min-height:1.5em;font-size:.94rem;color:#b9cee1;margin:13px 0 2px}#result{word-break:break-word;white-space:pre-wrap;background:#091b2d;border:1px solid #36526e;padding:14px;border-radius:12px;line-height:1.5;max-height:220px;overflow:auto}#result:empty:before{content:'Noch kein Code eingelesen.';color:#aabed0}#open{display:none}#open.visible{display:inline-flex}input[type=file]{display:none}.note{font-size:.9rem;color:#b6c6d7}footer{font-size:.83rem;color:#90abc0;margin-top:26px}button:focus-visible,.filebutton:focus-visible,a:focus-visible{outline:3px solid white;outline-offset:3px}
-</style></head><body><main><header><div class="logo" aria-hidden="true">▦</div><div><h1>Mein Code-Scanner</h1><div class="muted">Einfach · Privat · Ohne Werbung · Version 4</div></div></header>
+</style></head><body><main><header><div class="logo" aria-hidden="true">▦</div><div><h1>Mein Code-Scanner</h1><div class="muted">Einfach · Privat · Ohne Werbung · Version 5</div></div></header>
 <div class="panel"><h2>QR-Code oder Strichcode scannen</h2><div class="camera" id="camera"><video id="video" playsinline muted autoplay aria-label="Kamerabild"></video><div class="placeholder" id="placeholder"><strong>▦</strong>Zum Scannen die Kamera einschalten.</div></div><div class="actions"><button id="start">Kamera starten</button><button id="stop" class="secondary" disabled>Kamera stoppen</button><label for="file" class="filebutton wide">Code aus Bild auswählen</label><input type="file" id="file" accept="image/*"></div><div role="status" aria-live="polite" id="status" class="status">Bereit.</div></div>
 <div class="panel"><h2>Gelesener Inhalt</h2><p class="muted" id="codeType">QR-Code, EAN-13, EAN-8, UPC oder Code 128</p><div id="result" aria-live="polite"></div><div class="actions"><button id="copy" disabled>Text kopieren</button><button id="again" class="secondary">Erneut scannen</button><a id="open" class="action wide" target="_blank" rel="noopener noreferrer">Webseite öffnen</a></div><p class="note">Links werden nie automatisch geöffnet. Bei Produktcodes erscheint die Nummer; es erfolgt keine automatische Produktsuche.</p></div>
 <footer>Die Auswertung geschieht direkt auf diesem Gerät. Es werden keine Scans an einen Server gesendet.</footer></main>
@@ -18,14 +18,15 @@ const status=t=>{$('status').textContent=t};
 const F={};
 function setup(){
   if(reader)return true;
-  if(typeof ZXing==='undefined'||!ZXing.BrowserMultiFormatReader){
+  if(typeof ZXing==='undefined'||!ZXing.MultiFormatReader||!ZXing.RGBLuminanceSource||!ZXing.HybridBinarizer||!ZXing.BinaryBitmap){
     status('Scanner-Bibliothek konnte nicht geladen werden. Bitte Internetverbindung prüfen und Seite neu laden.');return false;
   }
   const formats=['QR_CODE','EAN_13','EAN_8','UPC_A','UPC_E','CODE_128','CODE_39','ITF'];
   const hints=new Map();
   hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS,formats.map(n=>ZXing.BarcodeFormat[n]));
   hints.set(ZXing.DecodeHintType.TRY_HARDER,true);
-  reader=new ZXing.BrowserMultiFormatReader(hints);
+  reader=new ZXing.MultiFormatReader();
+  reader.setHints(hints);
   return true;
 }
 function stop(){
@@ -46,19 +47,18 @@ function show(raw,fmt){
 }
 function readCanvas(){
   try{
-    if(typeof reader.decodeFromCanvas !== 'function'){
-      throw new Error('Die Barcode-Bibliothek bietet keine Canvas-Auswertung.');
-    }
-    const result=reader.decodeFromCanvas(canvas);
+    // @zxing/library 0.21.x: raw RGBA-Pixel an MultiFormatReader übergeben.
+    // BrowserMultiFormatReader.decodeFromCanvas gehört nicht zu dieser Version.
+    const pixels=ctx.getImageData(0,0,canvas.width,canvas.height);
+    const source=new ZXing.RGBLuminanceSource(pixels.data,pixels.width,pixels.height);
+    const bitmap=new ZXing.BinaryBitmap(new ZXing.HybridBinarizer(source));
+    const result=reader.decodeWithState(bitmap);
     return {raw:result.getText(),format:ZXing.BarcodeFormat[result.getBarcodeFormat()]||'Code'};
   }catch(e){
-    // Decoder liefern erwartungsgemäß häufig "kein Code gefunden".
-    // In Safari können Fehlerklassen unterschiedlich exportiert sein.
-    // Deshalb NICHT "instanceof ZXing.NotFoundException" verwenden.
     const kind=String(e?.name||e?.constructor?.name||'');
     const detail=String(e?.message||'');
     if(/NotFound|Checksum|FormatException|ReaderException/i.test(kind)||
-       /No MultiFormat Readers|No code found|not found|checksum/i.test(detail)) return null;
+       /No MultiFormat Readers|No code found|not found|checksum/i.test(detail))return null;
     throw e;
   }
 }
