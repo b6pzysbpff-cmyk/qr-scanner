@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "Mein QR- und Barcode-Scanner",
-  "short_name": "Code-Scanner",
+  "name": "Gundis Code-Scanner",
+  "short_name": "Gundis Scanner",
   "description": "QR- und Barcodes scannen und Lebensmittel automatisch bei Open Food Facts nachschlagen",
   "start_url": "./",
   "scope": "./",
