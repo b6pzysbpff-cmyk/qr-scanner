@@ -1,25 +1,17 @@
-MEIN QR-SCANNER – SAMSUNG GALAXY A17
+QR-Scanner – iPhone und Samsung (Version 2)
 
-Diese App ist eine installierbare Web-App (PWA), keine APK-Datei.
-Der QR-Code wird direkt auf dem Handy erkannt; keine Datenübertragung der Kamerabilder.
+Diese Version behebt die Meldung „Der Browser unterstützt die QR-Erkennung nicht“ auf iPhones.
 
-EINRICHTUNG MIT GITHUB PAGES:
-1. Am Computer github.com öffnen und anmelden.
-2. Neues öffentliches Repository "qr-scanner" anlegen.
-3. Den INHALT dieses Ordners hochladen (index.html, manifest.webmanifest, sw.js und icons/).
-4. Im Repository Settings > Pages > Build and deployment: "Deploy from a branch" auswählen.
-5. Branch "main", Ordner "/ (root)" wählen, Save.
-6. Wenn GitHub Pages bereit ist, lautet der Link normalerweise:
-   https://DEIN-GITHUB-NAME.github.io/qr-scanner/
-7. Diesen Link im Chrome-Browser auf dem Samsung Galaxy A17 öffnen.
-8. Browser-Menü (drei Punkte) > "Zum Startbildschirm hinzufügen" > "Installieren".
-9. Die App vom Startbildschirm öffnen und "Kamera starten" drücken.
+UPDATE DER BEREITS VERÖFFENTLICHTEN APP:
+1. ZIP-Datei entpacken.
+2. GitHub-Repository qr-scanner öffnen.
+3. Unter Add file > Upload files den INHALT des entpackten Ordners hochladen.
+4. Die bestehenden Dateien index.html, sw.js und manifest.webmanifest überschreiben (Commit changes).
+5. Auf iPhone Safari öffnen, die bisherige GitHub-Pages-Adresse aufrufen und neu laden.
+6. Falls die alte Version erscheint: Home-Bildschirm-App entfernen, Safari-Websitedaten der Seite löschen bzw. erneut öffnen und wieder zum Home-Bildschirm hinzufügen.
+7. Auf „Kamera starten“ tippen, Kamera erlauben und QR-Code scannen.
 
-WICHTIG:
-- Die Kamera benötigt eine HTTPS-Adresse. Eine heruntergeladene index.html allein
-  funktioniert dafür nicht zuverlässig.
-- Beim ersten Start Kamerazugriff erlauben.
-- Chrome oder Samsung Internet verwenden; Firefox Android unterstützt die
-  benötigte Erkennung ggf. nicht.
-- Links werden niemals automatisch geöffnet.
-- QR-Codes werden nicht dauerhaft gespeichert.
+TECHNIK:
+Verwendet native BarcodeDetector-Unterstützung, falls verfügbar, ansonsten jsQR 1.4.0 über jsDelivr.
+Für die Ersatz-Erkennung muss die jsQR-Bibliothek aus dem Internet geladen werden. Kamerabilder werden lokal verarbeitet.
+Der Scan von Bildern ist ebenfalls möglich.
