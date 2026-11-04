@@ -1,126 +1,98 @@
 <!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#12243c"><meta name="description" content="QR- und Barcode-Scanner für iPhone und Android"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon-192.png"><title>Mein Code-Scanner V5</title>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#12243c"><meta name="description" content="QR- und Barcode-Scanner für iPhone und Android"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon-192.png"><title>Mein Code-Scanner V6</title>
 <style>
-:root{color-scheme:dark;font-family:system-ui,-apple-system,Roboto,sans-serif;background:#091525;color:#f4f7fd}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(155deg,#122941,#091525 60%);padding:env(safe-area-inset-top) 16px env(safe-area-inset-bottom)}main{max-width:580px;margin:auto;padding:25px 0 35px}header{display:flex;align-items:center;gap:13px;margin-bottom:24px}.logo{width:48px;height:48px;background:#28d1ae;border-radius:15px;display:grid;place-items:center;color:#092338;font-size:27px;font-weight:800}h1{font-size:1.7rem;margin:0}p{line-height:1.5}.muted{color:#b1c2d5}h2{font-size:1.2rem;margin:0 0 12px}.panel{background:#172b43;border:1px solid #35516c;border-radius:20px;padding:18px;margin:18px 0}.camera{width:100%;aspect-ratio:4/5;max-height:460px;background:#050b12;border-radius:15px;overflow:hidden;position:relative;display:grid;place-items:center}video{width:100%;height:100%;object-fit:cover;display:none}.camera.active video{display:block}.camera:after{content:'';pointer-events:none;position:absolute;inset:22% 13%;border:3px solid #2ce5bb;border-radius:22px;box-shadow:0 0 0 100vmax #0002}.placeholder{text-align:center;color:#bed2e1;padding:20px}.placeholder strong{display:block;font-size:2.6rem;margin-bottom:12px}button,.filebutton,a.action{appearance:none;border:0;border-radius:13px;padding:15px 19px;background:#2ce5bb;color:#082237;font-size:1rem;font-weight:750;cursor:pointer;text-align:center;display:inline-flex;justify-content:center;align-items:center;gap:7px;text-decoration:none;min-height:50px}button.secondary,.filebutton{background:#29425d;color:#f6f9ff}button:disabled{opacity:.5;cursor:default}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.actions .wide{grid-column:span 2}.status{min-height:1.5em;font-size:.94rem;color:#b9cee1;margin:13px 0 2px}#result{word-break:break-word;white-space:pre-wrap;background:#091b2d;border:1px solid #36526e;padding:14px;border-radius:12px;line-height:1.5;max-height:220px;overflow:auto}#result:empty:before{content:'Noch kein Code eingelesen.';color:#aabed0}#open{display:none}#open.visible{display:inline-flex}input[type=file]{display:none}.note{font-size:.9rem;color:#b6c6d7}footer{font-size:.83rem;color:#90abc0;margin-top:26px}button:focus-visible,.filebutton:focus-visible,a:focus-visible{outline:3px solid white;outline-offset:3px}
-</style></head><body><main><header><div class="logo" aria-hidden="true">▦</div><div><h1>Mein Code-Scanner</h1><div class="muted">Einfach · Privat · Ohne Werbung · Version 5</div></div></header>
-<div class="panel"><h2>QR-Code oder Strichcode scannen</h2><div class="camera" id="camera"><video id="video" playsinline muted autoplay aria-label="Kamerabild"></video><div class="placeholder" id="placeholder"><strong>▦</strong>Zum Scannen die Kamera einschalten.</div></div><div class="actions"><button id="start">Kamera starten</button><button id="stop" class="secondary" disabled>Kamera stoppen</button><label for="file" class="filebutton wide">Code aus Bild auswählen</label><input type="file" id="file" accept="image/*"></div><div role="status" aria-live="polite" id="status" class="status">Bereit.</div></div>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,Roboto,sans-serif;background:#091525;color:#f4f7fd}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(155deg,#122941,#091525 60%);padding:env(safe-area-inset-top) 16px env(safe-area-inset-bottom)}main{max-width:580px;margin:auto;padding:25px 0 35px}header{display:flex;align-items:center;gap:13px;margin-bottom:24px}.logo{width:48px;height:48px;background:#28d1ae;border-radius:15px;display:grid;place-items:center;color:#092338;font-size:27px;font-weight:800}h1{font-size:1.7rem;margin:0}p{line-height:1.5}.muted{color:#b1c2d5}h2{font-size:1.2rem;margin:0 0 12px}.panel{background:#172b43;border:1px solid #35516c;border-radius:20px;padding:18px;margin:18px 0}.camera{width:100%;aspect-ratio:4/5;max-height:460px;background:#050b12;border-radius:15px;overflow:hidden;position:relative;display:grid;place-items:center}#reader{width:100%;height:100%;display:none;overflow:hidden}#reader video{width:100%!important;height:100%!important;object-fit:contain!important}#reader canvas{max-width:100%}.camera.active #reader{display:block}.camera.active:after{content:'';pointer-events:none;position:absolute;inset:22% 13%;border:3px solid #2ce5bb;border-radius:22px;box-shadow:0 0 0 100vmax #0002}.placeholder{text-align:center;color:#bed2e1;padding:20px}.placeholder strong{display:block;font-size:2.6rem;margin-bottom:12px}button,.filebutton,a.action{appearance:none;border:0;border-radius:13px;padding:15px 19px;background:#2ce5bb;color:#082237;font-size:1rem;font-weight:750;cursor:pointer;text-align:center;display:inline-flex;justify-content:center;align-items:center;gap:7px;text-decoration:none;min-height:50px}button.secondary,.filebutton{background:#29425d;color:#f6f9ff}button:disabled{opacity:.5;cursor:default}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.actions .wide{grid-column:span 2}.status{min-height:1.5em;font-size:.94rem;color:#b9cee1;margin:13px 0 2px}#result{word-break:break-word;white-space:pre-wrap;background:#091b2d;border:1px solid #36526e;padding:14px;border-radius:12px;line-height:1.5;max-height:220px;overflow:auto}#result:empty:before{content:'Noch kein Code eingelesen.';color:#aabed0}#open{display:none}#open.visible{display:inline-flex}input[type=file]{display:none}.note{font-size:.9rem;color:#b6c6d7}footer{font-size:.83rem;color:#90abc0;margin-top:26px}button:focus-visible,.filebutton:focus-visible,a:focus-visible{outline:3px solid white;outline-offset:3px}
+</style></head><body><main><header><div class="logo" aria-hidden="true">▦</div><div><h1>Mein Code-Scanner</h1><div class="muted">Einfach · Privat · Ohne Werbung · Version 6</div></div></header>
+<div class="panel"><h2>QR-Code oder Strichcode scannen</h2><div class="camera" id="camera"><div id="reader" aria-label="Kamerabild"></div><div class="placeholder" id="placeholder"><strong>▦</strong>Zum Scannen die Kamera einschalten.</div></div><div class="actions"><button id="start">Kamera starten</button><button id="stop" class="secondary" disabled>Kamera stoppen</button><label for="file" class="filebutton wide">Code aus Bild auswählen</label><input type="file" id="file" accept="image/*"></div><div role="status" aria-live="polite" id="status" class="status">Bereit.</div></div>
 <div class="panel"><h2>Gelesener Inhalt</h2><p class="muted" id="codeType">QR-Code, EAN-13, EAN-8, UPC oder Code 128</p><div id="result" aria-live="polite"></div><div class="actions"><button id="copy" disabled>Text kopieren</button><button id="again" class="secondary">Erneut scannen</button><a id="open" class="action wide" target="_blank" rel="noopener noreferrer">Webseite öffnen</a></div><p class="note">Links werden nie automatisch geöffnet. Bei Produktcodes erscheint die Nummer; es erfolgt keine automatische Produktsuche.</p></div>
 <footer>Die Auswertung geschieht direkt auf diesem Gerät. Es werden keine Scans an einen Server gesendet.</footer></main>
-<script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script defer>
 'use strict';
 const $ = id => document.getElementById(id);
-let stream=null, scanning=false, found='', reader=null, busy=false, frameTimer=null;
-let generation=0, frameErrors=0;
-const canvas=document.createElement('canvas');
-const ctx=canvas.getContext('2d',{willReadFrequently:true});
+let scanner=null, running=false, transitioning=false, found='';
 const status=t=>{$('status').textContent=t};
-const F={};
+const formats={QR_CODE:'QR-Code',EAN_13:'EAN-13',EAN_8:'EAN-8',UPC_A:'UPC-A',UPC_E:'UPC-E',CODE_128:'Code 128',CODE_39:'Code 39',ITF:'ITF'};
 function setup(){
-  if(reader)return true;
-  if(typeof ZXing==='undefined'||!ZXing.MultiFormatReader||!ZXing.RGBLuminanceSource||!ZXing.HybridBinarizer||!ZXing.BinaryBitmap){
-    status('Scanner-Bibliothek konnte nicht geladen werden. Bitte Internetverbindung prüfen und Seite neu laden.');return false;
-  }
-  const formats=['QR_CODE','EAN_13','EAN_8','UPC_A','UPC_E','CODE_128','CODE_39','ITF'];
-  const hints=new Map();
-  hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS,formats.map(n=>ZXing.BarcodeFormat[n]));
-  hints.set(ZXing.DecodeHintType.TRY_HARDER,true);
-  reader=new ZXing.MultiFormatReader();
-  reader.setHints(hints);
-  return true;
+ if(scanner)return true;
+ if(typeof Html5Qrcode==='undefined'||typeof Html5QrcodeSupportedFormats==='undefined'){
+  status('Scanner-Bibliothek wurde nicht geladen. Bitte Internetverbindung prüfen und Seite neu laden.');return false;
+ }
+ const f=Html5QrcodeSupportedFormats;
+ scanner=new Html5Qrcode('reader',{formatsToSupport:[f.QR_CODE,f.EAN_13,f.EAN_8,f.UPC_A,f.UPC_E,f.CODE_128,f.CODE_39,f.ITF],verbose:false,useBarCodeDetectorIfSupported:false});
+ return true;
 }
-function stop(){
-  generation++;scanning=false;clearTimeout(frameTimer);frameTimer=null;
-  if(stream){for(const track of stream.getTracks())track.stop();stream=null}
-  $('video').pause();$('video').srcObject=null;
-  $('camera').classList.remove('active');$('placeholder').hidden=false;
-  $('start').disabled=false;$('stop').disabled=true;
+function buttons(){
+ $('start').disabled=running||transitioning;
+ $('stop').disabled=!running||transitioning;
+}
+async function stop(){
+ if(transitioning)return;
+ transitioning=true;buttons();
+ try{if(running&&scanner)await scanner.stop();}
+ catch(e){console.warn('Kamera stoppen:',e)}
+ finally{running=false;transitioning=false;$('camera').classList.remove('active');$('placeholder').hidden=false;buttons();}
 }
 function show(raw,fmt){
-  if(!raw)return;
-  found=raw;stop();$('result').textContent=raw;$('copy').disabled=false;
-  const labels={QR_CODE:'QR-Code',EAN_13:'EAN-13',EAN_8:'EAN-8',UPC_A:'UPC-A',UPC_E:'UPC-E',CODE_128:'Code 128',CODE_39:'Code 39',ITF:'ITF'};
-  $('codeType').textContent='Erkannter Typ: '+(labels[fmt]||fmt||'Code');
-  const link=$('open');link.classList.remove('visible');link.removeAttribute('href');
-  try{const url=new URL(raw.trim());if(['https:','http:'].includes(url.protocol)){link.href=url.href;link.classList.add('visible')}}catch(e){}
-  status('Code erfolgreich gelesen.');if(navigator.vibrate)navigator.vibrate(80);
+ if(!raw||found===raw)return;
+ found=raw;
+ $('result').textContent=raw;
+ $('copy').disabled=false;
+ $('codeType').textContent='Erkannter Typ: '+(formats[fmt]||fmt||'Code');
+ const link=$('open');link.classList.remove('visible');link.removeAttribute('href');
+ try{const u=new URL(raw.trim());if(['https:','http:'].includes(u.protocol)){link.href=u.href;link.classList.add('visible')}}catch(e){}
+ status('Code erfolgreich gelesen.');
+ if(navigator.vibrate)navigator.vibrate(80);
+ // Erst nach dem Decoder-Callback anhalten, damit dessen Kamera-Schleife ungestört beendet wird.
+ setTimeout(()=>stop().catch(()=>{}),0);
 }
-function readCanvas(){
-  try{
-    // @zxing/library 0.21.x: raw RGBA-Pixel an MultiFormatReader übergeben.
-    // BrowserMultiFormatReader.decodeFromCanvas gehört nicht zu dieser Version.
-    const pixels=ctx.getImageData(0,0,canvas.width,canvas.height);
-    const source=new ZXing.RGBLuminanceSource(pixels.data,pixels.width,pixels.height);
-    const bitmap=new ZXing.BinaryBitmap(new ZXing.HybridBinarizer(source));
-    const result=reader.decodeWithState(bitmap);
-    return {raw:result.getText(),format:ZXing.BarcodeFormat[result.getBarcodeFormat()]||'Code'};
-  }catch(e){
-    const kind=String(e?.name||e?.constructor?.name||'');
-    const detail=String(e?.message||'');
-    if(/NotFound|Checksum|FormatException|ReaderException/i.test(kind)||
-       /No MultiFormat Readers|No code found|not found|checksum/i.test(detail))return null;
-    throw e;
-  }
-}
-function decodeVideo(){
-  const v=$('video');if(v.readyState<2||!v.videoWidth)return null;
-  // Hohe Auflösung für dünne EAN-Balken. Kamerabild bleibt auf dem Gerät.
-  const scale=Math.min(1,1280/Math.max(v.videoWidth,v.videoHeight));
-  canvas.width=Math.max(1,Math.round(v.videoWidth*scale));canvas.height=Math.max(1,Math.round(v.videoHeight*scale));
-  ctx.drawImage(v,0,0,canvas.width,canvas.height);
-  return readCanvas();
-}
-function scanFrame(token){
-  if(!scanning||busy||token!==generation)return;
-  busy=true;
-  try{
-    const hit=decodeVideo();frameErrors=0;
-    if(hit&&token===generation){show(hit.raw,hit.format);return}
-  }catch(e){
-    frameErrors++;
-    // Safari kann einzelne Videoframes kurzzeitig nicht auf Canvas zeichnen.
-    // Nur nach wiederholten Fehlern abbrechen und die Ursache anzeigen.
-    if(frameErrors>=8){
-      const detail=String(e?.message||e?.name||'Unbekannter Fehler').slice(0,150);
-      stop();status('Bildauswertung fehlgeschlagen: '+detail);return;
-    }
-  }finally{busy=false}
-  if(scanning&&token===generation)frameTimer=setTimeout(()=>scanFrame(token),260);
+function success(decodedText,decodedResult){
+ if(found)return;
+ const f=decodedResult?.result?.format;
+ let format='Code';
+ if(typeof f==='string')format=f;
+ else if(typeof decodedResult?.result?.formatName==='string')format=decodedResult.result.formatName;
+ else if(typeof decodedResult?.result?.getBarcodeFormat==='function')format=String(decodedResult.result.getBarcodeFormat());
+ show(decodedText,format);
 }
 async function start(){
-  stop();frameErrors=0;if(!setup())return;
-  if(!navigator.mediaDevices?.getUserMedia){status('Kamera benötigt HTTPS und einen aktuellen Browser.');return}
-  try{
-    stream=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}}});
-    $('video').srcObject=stream;await $('video').play();
-    $('camera').classList.add('active');$('placeholder').hidden=true;
-    $('start').disabled=true;$('stop').disabled=false;scanning=true;
-    status('Kamera aktiv. Strichcode quer und vollständig ins Bild halten; bei Bedarf Abstand ändern.');scanFrame(generation);
-  }catch(e){stop();status(e.name==='NotAllowedError'?'Kamerazugriff verweigert. Bitte in den iPhone- oder Browser-Einstellungen erlauben.':'Kamera konnte nicht gestartet werden: '+e.message)}
+ if(transitioning||running)return;
+ if(!setup())return;
+ transitioning=true;buttons();
+ try{
+  $('camera').classList.add('active');$('placeholder').hidden=true;
+  // Kein QR-Box-Zuschnitt: die EAN-Balken werden über die ganze Bildfläche gesucht.
+  await scanner.start({facingMode:'environment'},{fps:10,disableFlip:true},success,()=>{});
+  running=true;status('Kamera aktiv. Strichcode vollständig und waagerecht ins Bild halten. Abstand langsam verändern.');
+ }catch(e){
+  console.error(e);
+  $('camera').classList.remove('active');$('placeholder').hidden=false;
+  const m=String(e?.message||e);
+  status('Kamera konnte nicht gestartet werden: '+m.slice(0,180));
+ }finally{transitioning=false;buttons();}
 }
 $('start').addEventListener('click',start);
-$('stop').addEventListener('click',()=>{stop();status('Kamera gestoppt.')});
-$('again').addEventListener('click',()=>{found='';$('result').textContent='';$('copy').disabled=true;
-  $('codeType').textContent='QR-Code, EAN-13, EAN-8, UPC oder Code 128';$('open').classList.remove('visible');start()});
-$('copy').addEventListener('click',async()=>{if(!found)return;
-  try{await navigator.clipboard.writeText(found);status('In die Zwischenablage kopiert.')}
-  catch(e){status('Kopieren nicht möglich. Text bitte markieren.')}});
-$('file').addEventListener('change',async e=>{
-  const f=e.target.files?.[0];if(!f)return;stop();
-  try{
-    if(!setup())return;
-    const url=URL.createObjectURL(f);const img=new Image();
-    try{
-      await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=url});
-      const scale=Math.min(1,2200/Math.max(img.naturalWidth,img.naturalHeight));
-      canvas.width=Math.max(1,Math.round(img.naturalWidth*scale));canvas.height=Math.max(1,Math.round(img.naturalHeight*scale));
-      ctx.drawImage(img,0,0,canvas.width,canvas.height);
-      const hit=readCanvas();if(hit)show(hit.raw,hit.format);else status('Kein unterstützter Code im Bild gefunden. Bitte schärferes Bild versuchen.');
-    }finally{URL.revokeObjectURL(url)}
-  }catch(err){status('Bild konnte nicht ausgewertet werden. Bitte anderes Foto versuchen.');}
-  finally{e.target.value=''}
+$('stop').addEventListener('click',async()=>{await stop();status('Kamera gestoppt.')});
+$('again').addEventListener('click',async()=>{
+ found='';$('result').textContent='';$('copy').disabled=true;$('codeType').textContent='QR-Code, EAN-13, EAN-8, UPC oder Code 128';
+ const a=$('open');a.classList.remove('visible');a.removeAttribute('href');
+ await stop();await start();
 });
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&scanning){stop();status('Kamera aus Sicherheitsgründen angehalten.')}});
+$('copy').addEventListener('click',async()=>{
+ if(!found)return;
+ try{await navigator.clipboard.writeText(found);status('In die Zwischenablage kopiert.')}catch(e){status('Kopieren nicht möglich. Text bitte markieren.')}
+});
+$('file').addEventListener('change',async e=>{
+ const f=e.target.files?.[0];if(!f)return;
+ await stop();
+ if(!setup()){e.target.value='';return;}
+ try{
+  const r=await scanner.scanFileV2(f,false);
+  found=''; success(r.decodedText,r);
+ }catch(err){status('Im Bild wurde kein unterstützter Code gefunden. Bitte ein scharfes Foto wählen.');}
+ finally{e.target.value='';}
+});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&running)stop().then(()=>status('Kamera angehalten.'))});
 if('serviceWorker' in navigator&&location.protocol==='https:')
-  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{}));
+ window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{}));
 </script></body></html>
